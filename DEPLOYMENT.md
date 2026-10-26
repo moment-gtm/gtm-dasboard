@@ -42,6 +42,8 @@ login disabled, and unauthenticated role switching disabled.
 3. Wait for the service health check at `/api/health` to pass, then open the generated
    `https://<service-name>.onrender.com` URL.
 
+Render deploys the linked branch automatically after subsequent commits.
+
 The free service can sleep when idle and rebuilds its synthetic dataset at startup.
 This is a demo deployment, not production authentication; do not connect real customer
 data or treat the built-in mock personas as corporate SSO.
