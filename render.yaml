@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: gtm-dasboard
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: GTM_AUTH_MODE
+        value: mock_entra
+      - key: GTM_SOURCE_MODE
+        value: mock
+      - key: GTM_ALLOW_MOCK_IDENTITY
+        value: "0"
+      - key: GTM_ALLOW_PASSWORDLESS_LOGIN
+        value: "0"
+      - key: GTM_ENABLE_PERSONA_SWITCHER
+        value: "0"

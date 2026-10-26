@@ -30,7 +30,23 @@ docker compose up --build -d
 
 ---
 
-## Deployment Option 2: Standalone Production Services
+## Deployment Option 2: Render Blueprint (Synthetic Demo)
+
+The root `Dockerfile` builds the React production bundle and serves it from FastAPI,
+so the dashboard and API share one origin. `render.yaml` configures a free Singapore
+web service with synthetic mock connectors, authentication enabled, passwordless
+login disabled, and unauthenticated role switching disabled.
+
+1. Sign in to Render and connect the private `moment-gtm/gtm-dasboard` GitHub repository.
+2. Create a new **Blueprint** from that repository and apply the `render.yaml` configuration.
+3. Wait for the service health check at `/api/health` to pass, then open the generated
+   `https://<service-name>.onrender.com` URL.
+
+The free service can sleep when idle and rebuilds its synthetic dataset at startup.
+This is a demo deployment, not production authentication; do not connect real customer
+data or treat the built-in mock personas as corporate SSO.
+
+## Deployment Option 3: Standalone Production Services
 
 ### 1. Backend Setup (FastAPI / Uvicorn)
 

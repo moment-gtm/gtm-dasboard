@@ -4,9 +4,11 @@ from __future__ import annotations
 
 import logging
 from contextlib import asynccontextmanager
+from pathlib import Path
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from app.api.routes import (
     accounts,
@@ -105,3 +107,25 @@ for module in (
     admin,
 ):
     app.include_router(module.router)
+
+
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+
+
+@app.get("/{path:path}", include_in_schema=False)
+def serve_frontend(path: str = "") -> FileResponse:
+    if path == "api" or path.startswith("api/") or path == "mock" or path.startswith("mock/"):
+        raise HTTPException(status_code=404, detail="Not Found")
+
+    root = FRONTEND_DIR.resolve()
+    index = root / "index.html"
+    if not index.is_file():
+        raise HTTPException(status_code=404, detail="Not Found")
+    requested = (root / path).resolve()
+    if not requested.is_relative_to(root):
+        raise HTTPException(status_code=404, detail="Not Found")
+    if requested.is_file():
+        return FileResponse(requested)
+    if path.startswith("assets/"):
+        raise HTTPException(status_code=404, detail="Not Found")
+    return FileResponse(index)
