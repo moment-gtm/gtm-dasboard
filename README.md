@@ -47,7 +47,7 @@ The synthetic demo is deployed to GitHub Pages at
 **https://moment-gtm.github.io/gtm-dasboard/** from the `main` branch.
 
 ### 3. Sign In to the Synthetic Demo
-Use the shared demo account **`gtm-user` / `gtm-tower`**, or use any listed persona's email and the demo password format
+Use the shared demo account **`gtm-user` / `gtm-dashboard`**, or use any listed persona's email and the demo password format
 `Moment#2026$FirstName!GTM` (for example, Jordan Avery: `Moment#2026$Jordan!GTM`).
 These credentials are embedded in the public frontend and are for synthetic demo access only; they do not authenticate real Entra accounts or protect data.
 

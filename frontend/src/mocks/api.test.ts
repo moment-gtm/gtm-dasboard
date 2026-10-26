@@ -36,7 +36,7 @@ describe("frontend synthetic API", () => {
   it("authenticates the shared synthetic demo account as the GTM lead persona", async () => {
     const login = await api.post<{ access_token: string; user: AuthUser }>(
       "/api/auth/entra/login",
-      { upn: "gtm-user", password: "gtm-tower" },
+      { upn: "gtm-user", password: "gtm-dashboard" },
     );
 
     expect(login.user).toMatchObject({

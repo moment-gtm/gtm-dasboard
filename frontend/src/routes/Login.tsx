@@ -174,11 +174,11 @@ export function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="gtm-tower"
+                placeholder="gtm-dashboard"
                 className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none"
               />
               <p className="mt-1 text-xs text-gray-500">
-                Demo login: gtm-user / gtm-tower. Persona accounts use their synthetic password
+                Demo login: gtm-user / gtm-dashboard. Persona accounts use their synthetic password
                 format.
               </p>
             </div>

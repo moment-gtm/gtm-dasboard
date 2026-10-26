@@ -317,7 +317,7 @@ export async function mockRequest<T>({ url, method, body, headers }: MockRequest
           );
     if (!persona) throw new ApiError(401, "Choose a listed synthetic demo persona.");
     const expectedPassword =
-      identifier === "gtm-user" ? "gtm-tower" : `Moment#2026$${persona.name.split(" ")[0]}!GTM`;
+      identifier === "gtm-user" ? "gtm-dashboard" : `Moment#2026$${persona.name.split(" ")[0]}!GTM`;
     if (requestBody.password !== expectedPassword) {
       throw new ApiError(401, "Invalid synthetic demo credentials. Check the demo password format.");
     }
