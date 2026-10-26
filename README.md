@@ -43,6 +43,9 @@ mock sessions and admin edits are stored in local browser storage.
 To connect the optional FastAPI service instead, build with `VITE_DATA_MODE=api` and follow
 the backend steps in [DEPLOYMENT.md](./DEPLOYMENT.md).
 
+The synthetic demo is deployed to GitHub Pages at
+**https://moment-gtm.github.io/gtm-dasboard/** from the `main` branch.
+
 ### 3. Sign In to the Synthetic Demo
 Use any listed persona's email and the demo password format
 `Moment#2026$FirstName!GTM` (for example, Jordan Avery: `Moment#2026$Jordan!GTM`).

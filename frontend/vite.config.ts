@@ -7,6 +7,7 @@ import { fileURLToPath, URL } from "node:url";
 const backend = process.env.VITE_BACKEND_URL ?? "http://127.0.0.1:8000";
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS === "true" ? "/gtm-dasboard/" : "/",
   plugins: [react(), tailwindcss()],
   resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
   build: {
