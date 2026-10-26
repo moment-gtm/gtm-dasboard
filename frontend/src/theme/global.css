@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+/* Values mirror theme/tokens.ts (CSS needs them as custom properties). */
+:root {
+  --surface: #fcfcfb;
+  --page: #eef0ec;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --ink-muted: #6b6a65;
+  --grid: #e1e0d9;
+  --border: rgba(11, 11, 11, 0.1);
+  --focus: #2a78d6;
+  --accent: #2a78d6;
+  --accent-strong: #184f95;
+  --accent-wash: #e8f1fc;
+
+  /* Bento chrome */
+  --nav: #0d1b33;
+  --nav-ink: #d5deee;
+  --nav-muted: #93a3c1;
+  --nav-active: rgba(134, 182, 239, 0.16);
+  --spotlight: linear-gradient(135deg, #0d1b33 0%, #133a6e 60%, #184f95 100%);
+  --spotlight-ink: #ffffff;
+  --spotlight-muted: #c3d3ec;
+  --header-glass: rgba(238, 240, 236, 0.85);
+  --spotlight-row: rgba(255, 255, 255, 0.06);
+  --spotlight-stat: rgba(255, 255, 255, 0.08);
+  --brand-mark: linear-gradient(135deg, #3987e5, #184f95);
+  --hero-wash: linear-gradient(180deg, #e8f1fc 0%, rgba(232, 241, 252, 0) 160px);
+  --tile-radius: 20px;
+  --tile-radius-inner: 14px;
+  --tile-border: rgba(11, 11, 11, 0.06);
+  --tile-shadow: 0 1px 2px rgba(13, 27, 51, 0.04), 0 6px 20px rgba(13, 27, 51, 0.06);
+  --tile-shadow-hover: 0 2px 4px rgba(13, 27, 51, 0.06), 0 12px 32px rgba(13, 27, 51, 0.1);
+  /* Module content density: ModuleLayout renders at this scale; app chrome stays at 1.
+     Compact (0.8) from the lg breakpoint up — see the media query below. */
+  --content-scale: 1;
+
+  color-scheme: light;
+  font-family:
+    "Segoe UI Variable",
+    "Segoe UI",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: var(--ink);
+  background: var(--page);
+}
+
+body {
+  margin: 0;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Bento tiles ------------------------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--tile-border);
+  border-radius: var(--tile-radius);
+  box-shadow: var(--tile-shadow);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.card-hover:hover {
+  box-shadow: var(--tile-shadow-hover);
+  transform: translateY(-2px);
+}
+/* Nested tiles inside a tile: flatter, smaller radius. */
+.card .card {
+  border-radius: var(--tile-radius-inner);
+  box-shadow: none;
+  background: var(--page);
+  border-color: transparent;
+}
+/* Hero tile: the one widget the module leads with. */
+.tile-hero {
+  background: var(--hero-wash), var(--surface);
+  border-top: 3px solid var(--accent);
+}
+/* Spotlight tile: dark highlight for "what needs leadership attention". Text + badges only. */
+.tile-spotlight {
+  background: var(--spotlight);
+  color: var(--spotlight-ink);
+  border: 0;
+}
+.tile-spotlight .btn {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: var(--spotlight-ink);
+}
+.tile-spotlight .btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.tile-spotlight .btn-primary {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: var(--nav);
+}
+.tile-spotlight .btn-primary:hover {
+  background: var(--accent-wash);
+}
+
+/* Module content (ModuleLayout root) renders at --content-scale, like browser zoom: text,
+   spacing and tiles scale together so bento proportions hold. Nav rail, header, filter bar and
+   portalled overlays (popovers, drill-down panel) stay at 100%. Desktop only (Tailwind lg,
+   64rem): phone/tablet single-column layouts keep full-size text. */
+@media (min-width: 64rem) {
+  :root {
+    --content-scale: 0.8;
+  }
+}
+.module-content {
+  zoom: var(--content-scale);
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+.tile-spotlight .eyebrow {
+  color: var(--spotlight-muted);
+}
+
+.hero-number {
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e6e8e3 25%, #f1f2ef 50%, #e6e8e3 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: var(--tile-radius);
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+  .card,
+  .card-hover:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* ---- Controls ---------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn:hover {
+  background: var(--accent-wash);
+}
+.btn-ghost {
+  border-color: transparent;
+  background: transparent;
+}
+.btn-primary {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: #133f78;
+}
+select.btn {
+  border-radius: 10px;
+}
+
+.popover {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(13, 27, 51, 0.16);
+  padding: 12px;
+  z-index: 50;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+/* ---- Nav rail ---------------------------------------------------------------------------- */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-size: 14px;
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--nav-ink);
+  transition: background 0.15s ease;
+}
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+.nav-link[aria-current="page"] {
+  background: var(--nav-active);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 #86b6ef;
+}
+nav[data-testid="nav-rail"] *:focus-visible {
+  outline-color: #86b6ef;
+}
+
+/* Recharts focus ring for keyboard-activated bars */
+.recharts-wrapper:focus-visible,
+.recharts-surface:focus {
+  outline: none;
+}
+
+@media print {
+  nav,
+  .no-print,
+  [data-testid="filter-bar"] {
+    display: none !important;
+  }
+  /* <html> paints the page colour too, so both must be white or grey shows between tiles. */
+  :root,
+  body {
+    background: white;
+  }
+  /* No full-screen-height shell or trailing padding on paper: both spill onto a blank page. */
+  .min-h-screen {
+    min-height: 0;
+  }
+  main#main {
+    padding-bottom: 0;
+  }
+  /* Paper keeps the full-size print layout below (register fit rules assume scale 1). */
+  .module-content {
+    zoom: 1;
+  }
+  .card {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+  /* Registers: fit every column on the page instead of clipping to the scroll box. */
+  .data-register .overflow-x-auto {
+    overflow: visible;
+  }
+  .data-register table,
+  .data-register table * {
+    font-size: 9.5px !important;
+  }
+  .data-register th,
+  .data-register td {
+    padding: 3px 4px;
+  }
+  .data-register th,
+  .data-register td,
+  .data-register td * {
+    white-space: normal;
+  }
+  .data-register th button {
+    padding: 0 !important;
+  }
+  .data-register th button > span[aria-hidden="true"] {
+    display: none;
+  }
+  .data-register tr {
+    break-inside: avoid;
+  }
+  .tile-spotlight {
+    background: white;
+    color: var(--ink);
+    border: 1px solid var(--border);
+  }
+}

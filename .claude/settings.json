@@ -1,0 +1,56 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "python \"$env:CLAUDE_PROJECT_DIR/.claude/hooks/gtm_hooks.py\" session-start",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "python \"$env:CLAUDE_PROJECT_DIR/.claude/hooks/gtm_hooks.py\" pre-edit",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "python \"$env:CLAUDE_PROJECT_DIR/.claude/hooks/gtm_hooks.py\" post-edit",
+            "timeout": 150,
+            "statusMessage": "Formatting / linting edited file"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "python \"$env:CLAUDE_PROJECT_DIR/.claude/hooks/gtm_hooks.py\" stop",
+            "timeout": 600,
+            "statusMessage": "Running backend pytest (only if backend changed)"
+          }
+        ]
+      }
+    ]
+  }
+}

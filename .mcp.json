@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "@playwright/mcp@latest"]
+    },
+    "gtm-duckdb": {
+      "command": "backend/.venv/Scripts/mcp-server-motherduck.exe",
+      "args": ["--db-path", "backend/var/gtm_snapshot.duckdb"]
+    }
+  }
+}

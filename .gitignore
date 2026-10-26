@@ -1,0 +1,73 @@
+# ==========================================
+# Moment-GTM Dashboard - Root .gitignore
+# ==========================================
+
+# --- Node & Dependencies ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Frontend & Build Artifacts ---
+frontend/dist/
+dist/
+build/
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# --- Python & Virtual Environments ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Database & Data Platform Storage ---
+backend/var/
+*.duckdb
+*.duckdb.wal
+*.sqlite
+*.sqlite3
+*.db
+
+# --- E2E & Automation Test Results ---
+e2e/test-results/
+e2e/playwright-report/
+.playwright-mcp/
+outputs/
+
+# --- Temporary & Backup Excel Files ---
+~$*.xlsx
+*.backup.xlsx
+
+# --- Claude Code / Agent Local State ---
+.claude/settings.local.json
+.claude/hooks/.state/
+
+# --- Environment & Secret Variables ---
+.env
+.env.*
+!.env.example
+!.env.*.example
+.env.local
+.env.*.local
+*.env.local
+
+# --- OS & IDE Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+*.swo
