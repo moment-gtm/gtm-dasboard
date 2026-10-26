@@ -308,11 +308,16 @@ export async function mockRequest<T>({ url, method, body, headers }: MockRequest
   if (path === "/api/auth/entra/login" || path === "/api/auth/login") {
     const requestBody = readBody(body);
     const identifier = String(requestBody.upn ?? requestBody.username ?? "").trim().toLowerCase();
-    const persona = personas().find(
-      (item) => item.upn.toLowerCase() === identifier || item.username.toLowerCase() === identifier,
-    );
+    const allPersonas = personas();
+    const persona =
+      identifier === "gtm-user"
+        ? allPersonas.find((item) => item.username === "jordan.avery")
+        : allPersonas.find(
+            (item) => item.upn.toLowerCase() === identifier || item.username.toLowerCase() === identifier,
+          );
     if (!persona) throw new ApiError(401, "Choose a listed synthetic demo persona.");
-    const expectedPassword = `Moment#2026$${persona.name.split(" ")[0]}!GTM`;
+    const expectedPassword =
+      identifier === "gtm-user" ? "gtm-tower" : `Moment#2026$${persona.name.split(" ")[0]}!GTM`;
     if (requestBody.password !== expectedPassword) {
       throw new ApiError(401, "Invalid synthetic demo credentials. Check the demo password format.");
     }

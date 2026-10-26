@@ -33,6 +33,19 @@ describe("frontend synthetic API", () => {
     });
   });
 
+  it("authenticates the shared synthetic demo account as the GTM lead persona", async () => {
+    const login = await api.post<{ access_token: string; user: AuthUser }>(
+      "/api/auth/entra/login",
+      { upn: "gtm-user", password: "gtm-tower" },
+    );
+
+    expect(login.user).toMatchObject({
+      username: "jordan.avery",
+      upn: "jordan.avery@moment.example",
+      role: "gtm_lead",
+    });
+  });
+
   it("rejects invalid credentials and unknown fixture routes explicitly", async () => {
     await expect(
       api.post("/api/auth/entra/login", {

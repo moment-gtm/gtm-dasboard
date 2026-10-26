@@ -120,14 +120,13 @@ export function Login() {
             </div>
           )}
 
-          {/* Section: Sign In with Corporate Work Account (UPN) */}
+          {/* Section: Sign in to the synthetic demo */}
           <div className="mb-4">
             <h2 className="text-sm font-bold uppercase tracking-wider text-gray-800">
-              Sign In with Corporate Work Account (UPN)
+              Sign in to the synthetic demo
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
-              Choose a synthetic demo persona. Data is bundled with the frontend and saved settings
-              stay in this browser.
+              Use the demo account below, or sign in as a listed synthetic persona.
             </p>
           </div>
 
@@ -138,7 +137,7 @@ export function Login() {
                 htmlFor="upn"
                 className="block text-xs font-semibold uppercase tracking-wider text-gray-700 mb-1"
               >
-                Corporate UPN / Work Email
+                Demo username / persona email
               </label>
               <input
                 id="upn"
@@ -147,7 +146,7 @@ export function Login() {
                 required
                 value={upn}
                 onChange={(e) => setUpn(e.target.value)}
-                placeholder="e.g. jordan.avery@moment.example"
+                placeholder="gtm-user"
                 className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none"
               />
             </div>
@@ -175,11 +174,12 @@ export function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Moment#2026$FirstName!GTM"
+                placeholder="gtm-tower"
                 className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none"
               />
               <p className="mt-1 text-xs text-gray-500">
-                Synthetic demo password format: Moment#2026$FirstName!GTM
+                Demo login: gtm-user / gtm-tower. Persona accounts use their synthetic password
+                format.
               </p>
             </div>
 
