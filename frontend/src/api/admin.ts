@@ -1,5 +1,5 @@
 /** Administration API client (FR-ADM-01..04, change control). */
-import { api, buildUrl } from "@/api/client";
+import { api } from "@/api/client";
 import { currentRole } from "@/state/role";
 import type { MetricResult } from "@/api/types";
 
@@ -329,7 +329,7 @@ export const adminApi = {
   findings: (q: { rule_id?: string; owner?: string; q?: string; page: number }) =>
     api.get<DqFindingsPage>(`${A}/dq/findings`, undefined, { ...q, page_size: 10 }),
   exportUrl: (rule_id?: string) =>
-    buildUrl(`${A}/dq/export`, undefined, { rule_id, role: currentRole() }),
+    api.downloadUrl(`${A}/dq/export`, undefined, { rule_id, role: currentRole() }),
   changeRequests: () => api.get<ChangeRequest[]>(`${A}/change-requests`),
   logChange: (body: { metric_id?: string | null; title: string; description: string }) =>
     api.post<ChangeRequest>(`${A}/change-requests`, body),

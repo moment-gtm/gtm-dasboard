@@ -1,19 +1,7 @@
-# One-command run of the prototype: FastAPI semantic layer + React dev server.
-# Not verified on this machine (Docker is not installed); local run steps are in README.md.
+# Frontend-only demo: all dashboard data is bundled in frontend/src/mocks/data.json.
 services:
-  backend:
-    build: ./backend
-    ports: ["8000:8000"]
-    environment:
-      GTM_DEMO_TODAY: "2026-08-14"
-      GTM_CORS_ORIGINS: "http://localhost:5173"
-    volumes:
-      - backend-var:/app/var   # audit log + read-only platform snapshot
   frontend:
     build: ./frontend
     ports: ["5173:5173"]
     environment:
-      VITE_BACKEND_URL: "http://backend:8000"
-    depends_on: [backend]
-volumes:
-  backend-var:
+      VITE_DATA_MODE: mock

@@ -83,7 +83,7 @@ export function Login() {
               Moment GTM Dashboard
             </h1>
             <p className="mt-1 text-sm text-gray-600 max-w-sm">
-              Executive Go-to-Market Analytics & Intelligence • Single Sign-On (SSO) Portal
+              Executive Go-to-Market Analytics & Intelligence • Synthetic Demo Portal
             </p>
 
             <div
@@ -94,7 +94,7 @@ export function Login() {
               }}
             >
               <span className="inline-block h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Pluggable Microsoft Entra Provider Active (Mock Mode)</span>
+              <span>Frontend mock data mode — no backend required</span>
             </div>
           </div>
 
@@ -126,8 +126,8 @@ export function Login() {
               Sign In with Corporate Work Account (UPN)
             </h2>
             <p className="text-xs text-gray-500 mt-0.5">
-              Enter your corporate email to access the Moment GTM Dashboard with your assigned
-              security profile.
+              Choose a synthetic demo persona. Data is bundled with the frontend and saved settings
+              stay in this browser.
             </p>
           </div>
 
@@ -175,9 +175,12 @@ export function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your Entra password"
+                placeholder="Moment#2026$FirstName!GTM"
                 className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm text-gray-900 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 focus:outline-none"
               />
+              <p className="mt-1 text-xs text-gray-500">
+                Synthetic demo password format: Moment#2026$FirstName!GTM
+              </p>
             </div>
 
             <button
@@ -202,7 +205,7 @@ export function Login() {
 
           {/* Footer Architecture Note */}
           <div className="mt-5 pt-3 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-[11px] text-gray-500 gap-2">
-            <span>RSD NFR-04 (Entra ID SSO) & NFR-05 (Entra Group RLS) Compliant</span>
+            <span>Synthetic persona simulation only — not corporate SSO or production RLS</span>
             <span>
               Switch to Azure AD Production via{" "}
               <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
@@ -214,7 +217,7 @@ export function Login() {
 
         {/* Footer Note */}
         <div className="mt-3 text-center text-xs text-blue-200/80">
-          Protected by Microsoft Entra ID, Row-Level Security Access Controls & Data Sovereignty
+          Synthetic demo data only. Do not use for real customer data or access-control testing.
         </div>
       </div>
     </div>

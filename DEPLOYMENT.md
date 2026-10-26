@@ -16,7 +16,7 @@ This archive contains the production-ready source code, analytical databases, an
 
 ---
 
-## Deployment Option 1: Docker Compose (Recommended)
+## Deployment Option 1: Docker Compose (Frontend-Only Demo)
 
 From dashboard root directory:
 
@@ -24,29 +24,27 @@ From dashboard root directory:
 docker compose up --build -d
 ```
 
-- **Frontend**: `http://<server-ip>:5173`
-- **Backend API**: `http://<server-ip>:8000`
-- **Interactive Swagger Docs**: `http://<server-ip>:8000/docs`
+- **Dashboard**: `http://<server-ip>:5173`
+
+The compose file runs only the frontend and uses the checked-in synthetic fixtures.
 
 ---
 
-## Deployment Option 2: Render Blueprint (Synthetic Demo)
+## Deployment Option 2: Render Static Site (Frontend-Only Demo)
 
-The root `Dockerfile` builds the React production bundle and serves it from FastAPI,
-so the dashboard and API share one origin. `render.yaml` configures a free Singapore
-web service with synthetic mock connectors, authentication enabled, passwordless
-login disabled, and unauthenticated role switching disabled.
+The frontend contains synthetic API response fixtures and a browser-only mock API. No
+Python backend or database is needed to browse the demo. Mock sessions and admin edits
+are kept in the current browser; dashboards use the bundled synthetic snapshot.
 
 1. Sign in to Render and connect the private `moment-gtm/gtm-dasboard` GitHub repository.
-2. Create a new **Blueprint** from that repository and apply the `render.yaml` configuration.
-3. Wait for the service health check at `/api/health` to pass, then open the generated
-   `https://<service-name>.onrender.com` URL.
+2. Create a **Blueprint** from the repository and deploy the `render.yaml` static site.
+3. Open the generated `https://<service-name>.onrender.com` URL after the build succeeds.
 
-Render deploys the linked branch automatically after subsequent commits.
+The static site serves only synthetic demo data. It is not corporate SSO or a security
+boundary; do not use it for real data or access-control testing.
 
-The free service can sleep when idle and rebuilds its synthetic dataset at startup.
-This is a demo deployment, not production authentication; do not connect real customer
-data or treat the built-in mock personas as corporate SSO.
+To use the FastAPI backend instead, set `VITE_DATA_MODE=api` when building the frontend
+and run the backend separately as described below.
 
 ## Deployment Option 3: Standalone Production Services
 

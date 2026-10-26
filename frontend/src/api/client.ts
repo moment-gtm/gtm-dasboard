@@ -2,18 +2,13 @@
 import { filtersToParams, type Filters } from "@/state/filters";
 import { currentAuthToken } from "@/state/auth";
 import { currentRole } from "@/state/role";
+import { ApiError } from "@/api/errors";
+import { mockDownloadUrl, mockRequest } from "@/mocks/api";
+
+export { ApiError } from "@/api/errors";
 
 const BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "";
-
-export class ApiError extends Error {
-  constructor(
-    public status: number,
-    message: string,
-  ) {
-    super(message);
-    this.name = "ApiError";
-  }
-}
+const USE_MOCK_DATA = import.meta.env.VITE_DATA_MODE !== "api";
 
 type Query = Record<string, string | number | undefined | null>;
 
@@ -27,8 +22,21 @@ export function buildUrl(path: string, filters?: Filters, extra: Query = {}): st
 }
 
 async function request<T>(url: string, init: RequestInit = {}): Promise<T> {
-  let res: Response;
   const token = currentAuthToken();
+  if (USE_MOCK_DATA) {
+    return mockRequest<T>({
+      url,
+      method: init.method ?? "GET",
+      body: init.body,
+      headers: {
+        ...init.headers,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        "X-Mock-Role": currentRole(),
+      },
+    });
+  }
+
+  let res: Response;
   const authHeaders: Record<string, string> = {};
   if (token) {
     authHeaders["Authorization"] = `Bearer ${token}`;
@@ -75,7 +83,10 @@ export const api = {
     return request<T>(`${BASE}${path}`, { method: "PUT", body: JSON.stringify(body) });
   },
   /** URL for a file download opened via <a href> (role travels as a query param). */
-  downloadUrl(path: string, filters: Filters, extra: Query = {}): string {
+  downloadUrl(path: string, filters?: Filters, extra: Query = {}): string {
+    if (USE_MOCK_DATA) {
+      return mockDownloadUrl(path, extra);
+    }
     return buildUrl(path, filters, { ...extra, role: currentRole() });
   },
 };
